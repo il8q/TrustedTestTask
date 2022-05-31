@@ -6,7 +6,7 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import EventList from "./event-list-page/EventList";
+import EventListPage from "./event-list-page/EventListPage";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<MainPage />} />
-                <Route path="/events" element={<EventList />} />
+                <Route path="/events" element={<EventListPage />} />
             </Routes>
         </Router>
     </div>
