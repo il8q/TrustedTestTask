@@ -18,3 +18,7 @@ code {
   margin: auto;
   width: 75%;
 }
+
+.text-to-center {
+  text-align: center;
+}

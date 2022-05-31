@@ -18,10 +18,6 @@
   font-size: calc(10px + 2vmin);
 }
 
-.main-page__title {
-  text-align: center;
-}
-
 .main-page__link {
   color: #61dafb;
 }
