@@ -2,9 +2,16 @@ export default class EventListElement
 {
    private readonly data: Date;
    private description: string;
-   constructor(data: Date = new Date(), description: string) {
+   public readonly isOverdue: boolean;
+
+   constructor(
+      data: Date = new Date(),
+      description: string,
+      isOverdue: boolean,
+   ) {
       this.data = data;
-      this.description = description;// TODO: нужна фабрика, так требуется проверка максимальной длинны
+      this.description = description;
+      this.isOverdue = isOverdue;
    }
 
    public getData(): Date {

@@ -1,3 +1,7 @@
 .event-element-list {
     margin: 10px;
 }
+
+.event-element-list__data_overdue {
+    color: #e10000;
+}
