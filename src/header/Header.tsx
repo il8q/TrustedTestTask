@@ -1,16 +1,19 @@
 import './css/header.css';
+import {
+    Link
+} from "react-router-dom";
 
 export default function Header() {
     return (
-        <div className="header-wrap">
-            <a
-                className="main-page__link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Learn React
-            </a>
-        </div>
+        <nav className="header-wrap">
+            <ul className="">
+                <li>
+                    <Link to="/">Главная</Link>
+                </li>
+                <li>
+                    <Link to="/events">События</Link>
+                </li>
+            </ul>
+        </nav>
     );
 }
