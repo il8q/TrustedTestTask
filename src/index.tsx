@@ -9,7 +9,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <div className="common-content-wrap">
+          <App />
+      </div>
   </React.StrictMode>
 );
 
