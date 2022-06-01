@@ -3,11 +3,13 @@ import {DomainModel, EventListElement, EventHandler as DomainEventHandler} from 
 import React from "react";
 import EventListManagerPanel from "./event-list-manager-panel/EventListManagerPanel";
 import EventHandler from "./event-list-manager-panel/event-handler/event-handler";
+import AddEventElementListPanel from "./event-list-manager-panel/add-event-element-list-panel/AddEventElementListPanel";
 
 type PageProperties = {
 };
 type PageState = {
     events: Array<EventListElement>;
+    showAddEventPanel: boolean;
 };
 
 
@@ -24,6 +26,7 @@ export default class EventListPage extends React.Component<PageProperties, PageS
         this.domainModel.subscribe("eventList", this.eventHandler);
         this.state = {
             events: this.domainModel.getEventList(),
+            showAddEventPanel: false,
         };
     }
 
@@ -33,6 +36,7 @@ export default class EventListPage extends React.Component<PageProperties, PageS
                 <h1 className="text-to-center">События</h1>
                 <EventListManagerPanel eventHandler={this.domainModel}/>
                 {this.renderEventList()}
+                {this.renderPopup()}
             </div>
         );
     }
@@ -45,10 +49,34 @@ export default class EventListPage extends React.Component<PageProperties, PageS
         ));
     }
 
-    public updateState()
+    public updateEventList()
     {
         this.setState({
             events: this.domainModel.getEventList(),
         });
+    }
+
+    public openAddEventPanel()
+    {
+        this.setState({
+            showAddEventPanel: true,
+        });
+    }
+
+    public closeAddEventPanel()
+    {
+        this.setState({
+            showAddEventPanel: false,
+        });
+    }
+
+    private renderPopup() {
+        if (this.state.showAddEventPanel) {
+            return <AddEventElementListPanel
+                eventHandler={this.domainModel}
+                subscribeTo={this.domainModel}
+            />;
+        }
+        return (<div></div>);
     }
 }

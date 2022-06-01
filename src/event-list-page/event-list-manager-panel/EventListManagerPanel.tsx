@@ -32,21 +32,13 @@ export default class EventListManagerPanel extends React.Component<PagePropertie
                         <a onClick={() => {
                             this.props.eventHandler.applyEvent(
                                 new DomainModelEvent(
-                                    "addToEventList",
-                                    new Map<string, string>([
-                                        ["description", "Test"],// TODO: создавать в всплывашке
-                                    ])
+                                    "openAddEventPanel",
+                                    new Map<string, string>()
                                 )
                         )}}>Добавить</a>
                     </li>
                 </ul>
             </div>
         );
-    }
-
-    public componentDidMount() {
-    }
-
-    public componentWillUnmount() {
     }
 }

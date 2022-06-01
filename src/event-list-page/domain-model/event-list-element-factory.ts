@@ -28,6 +28,8 @@ export default class EventListElementFactory
     private checkDescription(description: string) {
         if (description.length > EventListElementFactory.MAX_DESCRIPTION_LENGTH) {
             throw new Error("В описании больше " + EventListElementFactory.MAX_DESCRIPTION_LENGTH + " символов");
+        } else if (description.length === 0) {
+            throw new Error("Пустое описание");
         }
     }
 }

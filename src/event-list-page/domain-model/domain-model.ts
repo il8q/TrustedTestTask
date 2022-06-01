@@ -2,7 +2,7 @@ import DemoDataGenerator from "./demo-data-generator";
 import EventListElementFactory from "./event-list-element-factory";
 import EventListElement from "./event-list-element";
 import EventHandler from "./event-handler";
-import {DomainModelEvent} from "./domain-model-event";
+import {DomainModelEvent, Parameters} from "./domain-model-event";
 import EventSubscriber from "./event-subscriber";
 
 export default class DomainModel implements EventHandler, EventSubscriber
@@ -21,38 +21,32 @@ export default class DomainModel implements EventHandler, EventSubscriber
         this.subscribers = new Map<string, EventHandler>();
     }
 
-
-
     public applyEvent(event: DomainModelEvent)
     {
         switch (event.eventName) {
             case "addToEventList":
-                this.eventListElements.push(this.eventListElementFactory.create(
-                    this.eventCounter,
-                    <string>event.parameters.get("description")
-                ));
-                this.updateEventList();
+                this.addToEventList(event);
                 break;
             case "clearEventList":
-                this.eventListElements = new Array<EventListElement>;
-                this.updateEventList();
+                this.clearEventList();
                 break;
-            case "error":
-                throw new Error(<string>event.parameters.get("description"));
+            case "openAddEventPanel":
+                this.openAddEventPanel();
+                break;
             default:
                 throw new Error("Unknown event \""  + event.eventName + "\"");
         }
     }
 
-    public updateEventList()
-    {
-        let eventList = this.subscribers.get("eventList");
+    public sendToSubscriber(
+        name: string,
+        eventName: string,
+        eventParameters: Map<string, any> = new Map<string, any>()
+    ) {
+        let eventList = this.subscribers.get(name);
         // @ts-ignore
         eventList.applyEvent(
-            new DomainModelEvent(
-                "updateEventList",
-                new Map<string, any>(),
-            )
+            new DomainModelEvent(eventName, eventParameters)
         )
     }
 
@@ -63,5 +57,41 @@ export default class DomainModel implements EventHandler, EventSubscriber
 
     public subscribe(ownName: string, subscriber: EventHandler): void {
         this.subscribers.set(ownName, subscriber);
+    }
+
+    private addToEventList(event: DomainModelEvent) {
+        try {
+            this.eventListElements.push(this.eventListElementFactory.create(
+                this.eventCounter,
+                <string>event.parameters.get("description")
+            ));
+            this.sendToSubscriber("eventList", "updateEventList");
+            this.sendToSubscriber("eventList", "closeAddEventPanel");
+        } catch (exception) {
+            this.sendToSubscriber(
+                "addEventElementListPanel",
+                "error",
+                this.extractErrorMessage(exception)
+            );
+        }
+    }
+
+    private clearEventList() {
+        this.eventListElements = new Array<EventListElement>;
+        this.sendToSubscriber("eventList", "updateEventList");
+    }
+
+    private openAddEventPanel() {
+        this.sendToSubscriber("eventList", "openAddEventPanel");
+    }
+
+    private extractErrorMessage(exception: any): Parameters {
+        let parameters = new Map<string, any>();
+        if (exception instanceof Error) {
+            parameters.set("message", exception.message);
+        } else {
+            parameters.set("message", exception);
+        }
+        return parameters;
     }
 }

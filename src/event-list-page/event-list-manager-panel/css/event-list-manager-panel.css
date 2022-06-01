@@ -23,6 +23,7 @@
 
 .event-list-manager-panel li a:hover {
     background-color: #111111;
+    cursor: pointer;
 }
 
 .event-list-manager-panel__clear-button {

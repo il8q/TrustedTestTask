@@ -24,4 +24,5 @@
 
 .header-wrap li a:hover {
     background-color: #111111;
+    cursor: pointer;
 }

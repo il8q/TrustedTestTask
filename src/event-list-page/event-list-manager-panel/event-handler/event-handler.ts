@@ -11,19 +11,19 @@ export default class EventHandler implements DomainEventHandler {
 
     public applyEvent(event: DomainModelEvent)
     {
-        if (this.checkEventName(event.eventName))
+        switch (event.eventName)
         {
-            this.parent.updateState();
-        }
-    }
-
-    private checkEventName(eventName: string) {
-        switch (eventName)
-        {
+            case "openAddEventPanel":
+                this.parent.openAddEventPanel();
+                break;
+            case "closeAddEventPanel":
+                this.parent.closeAddEventPanel();
+                break;
             case "updateEventList":
-                return true;
+                this.parent.updateEventList();
+                break;
             default:
-                throw new Error("EventPage принял не своё событие \"" + eventName + "\"");
+                throw new Error("EventPage принял не своё событие \"" + event.eventName + "\"");
         }
     }
 }
