@@ -65,9 +65,10 @@ export default class DomainModel implements EventHandler, EventSubscriber
     private addToEventList(event: DomainModelEvent) {
         try {
             this.eventListElements.push(this.eventListElementFactory.create(
-                ++this.eventCounter,
+                this.eventCounter,
                 <string>event.parameters.get("description")
             ));
+            this.eventCounter++;
             this.sendToSubscriber("eventList", "updateEventList");
             this.sendToSubscriber("eventList", "closeAddEventPanel");
         } catch (exception) {
