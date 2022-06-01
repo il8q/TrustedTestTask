@@ -10,7 +10,7 @@ export default class DomainModel implements EventHandler, EventSubscriber
     private demoDataGenerator: DemoDataGenerator;
     private readonly eventListElementFactory: EventListElementFactory;
     private eventListElements: Array<EventListElement>;
-    private readonly eventCounter: number;
+    private eventCounter: number;
     private subscribers: Map<string, EventHandler>;
 
     constructor() {
@@ -32,6 +32,9 @@ export default class DomainModel implements EventHandler, EventSubscriber
                 break;
             case "openAddEventPanel":
                 this.openAddEventPanel();
+                break;
+            case "closeAddEventPanel":
+                this.closeAddEventPanel();
                 break;
             default:
                 throw new Error("Unknown event \""  + event.eventName + "\"");
@@ -62,7 +65,7 @@ export default class DomainModel implements EventHandler, EventSubscriber
     private addToEventList(event: DomainModelEvent) {
         try {
             this.eventListElements.push(this.eventListElementFactory.create(
-                this.eventCounter,
+                ++this.eventCounter,
                 <string>event.parameters.get("description")
             ));
             this.sendToSubscriber("eventList", "updateEventList");
@@ -83,6 +86,10 @@ export default class DomainModel implements EventHandler, EventSubscriber
 
     private openAddEventPanel() {
         this.sendToSubscriber("eventList", "openAddEventPanel");
+    }
+
+    private closeAddEventPanel() {
+        this.sendToSubscriber("eventList", "closeAddEventPanel");
     }
 
     private extractErrorMessage(exception: any): Parameters {

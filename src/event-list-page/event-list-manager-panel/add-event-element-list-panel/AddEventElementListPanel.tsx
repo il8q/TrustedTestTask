@@ -32,34 +32,11 @@ export default class AddEventElementListPanel extends React.Component<PageProper
         return (
             <div className="add-event-element-list-panel">
                 <div className="add-event-element-list-panel-content">
-                    <div className="add-event-element-list-panel__error-message">
-                        {this.state.errorMessage}
-                    </div>
-                    <div className="add-event-element-list-panel__description-label">Описание</div>
-                    <textarea className="add-event-element-list-panel__description"
-                              name="description"
-                              ref="description"
-                              value={this.state.description}
-                              onChange={(event)=>{
-                                  this.setState({
-                                      description: event.target.value,
-                                  });
-                              }}>
-                    </textarea>
-                    <div className="add-event-element-list-panel__button-container text-to-center">
-                        <a className="button-container__button" onClick={() => {
-                            this.props.eventHandler.applyEvent(
-                                new DomainModelEvent(
-                                    "addToEventList",
-                                    new Map<string, string>([
-                                        ["description", this.state.description],
-                                    ])
-                                )
-                            )
-                        }}>
-                            <b>Создать</b>
-                        </a>
-                    </div>
+                    {this.renderCloseButton()}
+                    {this.renderErrorMessageBlock()}
+                    {this.renderDescriptionLabel()}
+                    {this.renderDescriptionTextArea()}
+                    {this.renderCreateButton()}
                 </div>
             </div>
         );
@@ -69,5 +46,73 @@ export default class AddEventElementListPanel extends React.Component<PageProper
         this.setState({
             errorMessage: "Ошибка: " + errorMessage,
         });
+    }
+
+    private renderDescriptionLabel() {
+        return (
+            <div className="add-event-element-list-panel__description-label">Описание</div>
+        );
+    }
+
+
+    private renderDescriptionTextArea() {
+        return (
+            <textarea className="add-event-element-list-panel__description"
+                  name="description"
+                  ref="description"
+                  value={this.state.description}
+                  onChange={(event)=>{
+                      this.setState({
+                          description: event.target.value,
+                      });
+                  }}>
+            </textarea>
+        );
+    }
+
+    private renderCreateButton() {
+        return (
+            <div className="add-event-element-list-panel__button-container text-to-center">
+                <a className="button-container__button" onClick={() => {
+                    this.props.eventHandler.applyEvent(
+                        new DomainModelEvent(
+                            "addToEventList",
+                            new Map<string, string>([
+                                ["description", this.state.description],
+                            ])
+                        )
+                    )
+                }}>
+                    <b>Создать</b>
+                </a>
+            </div>
+        );
+    }
+
+    private renderErrorMessageBlock() {
+        return (
+            <div className="add-event-element-list-panel__error-message">
+                {this.state.errorMessage}
+            </div>
+        );
+    }
+
+    private renderCloseButton() {
+        return (
+            <div className="text-to-right">
+                <a className="button-container__button" onClick={() => {
+                    this.props.eventHandler.applyEvent(
+                        new DomainModelEvent(
+                            "closeAddEventPanel",
+                            new Map<string, string>([
+                                ["description", this.state.description],
+                            ])
+                        )
+                    )
+                }}>
+                    <b>X</b>
+                </a>
+            </div>
+        );
     }
 }
