@@ -1,7 +1,8 @@
 import EventElementList from "./EventElementList";
-import DemoDataGenerator from "./domain-model/demo-data-generator";
-import {DomainModel, EventListElement} from "./domain-model";
+import {DomainModel, EventListElement, EventHandler as DomainEventHandler} from "./domain-model";
 import React from "react";
+import EventListManagerPanel from "./event-list-manager-panel/EventListManagerPanel";
+import EventHandler from "./event-list-manager-panel/event-handler/event-handler";
 
 type PageProperties = {
 };
@@ -9,16 +10,20 @@ type PageState = {
     events: Array<EventListElement>;
 };
 
+
 export default class EventListPage extends React.Component<PageProperties, PageState> {
-    private domainModel: DomainModel;
+    private readonly domainModel: DomainModel;
     public state: PageState;
+    private readonly eventHandler: EventHandler;
 
     constructor(props: PageProperties) {
         super(props);
 
         this.domainModel = new DomainModel();
+        this.eventHandler = new EventHandler(this);
+        this.domainModel.subscribe("eventList", this.eventHandler);
         this.state = {
-            events: this.domainModel.getDemoData(),
+            events: this.domainModel.getEventList(),
         };
     }
 
@@ -26,6 +31,7 @@ export default class EventListPage extends React.Component<PageProperties, PageS
         return (
             <div className="event-list-page">
                 <h1 className="text-to-center">События</h1>
+                <EventListManagerPanel eventHandler={this.domainModel}/>
                 {this.renderEventList()}
             </div>
         );
@@ -37,5 +43,12 @@ export default class EventListPage extends React.Component<PageProperties, PageS
                               description={member.getDescription()}
                               isOverdue={member.isOverdue}/>
         ));
+    }
+
+    public updateState()
+    {
+        this.setState({
+            events: this.domainModel.getEventList(),
+        });
     }
 }

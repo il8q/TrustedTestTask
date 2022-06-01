@@ -19,4 +19,9 @@ export default class DemoDataGenerator
             this.elementFactory.create(-4, "Overdue -4"),
         ]
     }
+
+    public getCounter(): number
+    {
+        return this.eventCounter;
+    }
 }
