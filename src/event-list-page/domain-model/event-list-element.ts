@@ -1,7 +1,7 @@
 export default class EventListElement
 {
    private readonly data: Date;
-   private description: string;
+   private readonly description: string;
    public readonly isOverdue: boolean;
 
    constructor(
@@ -20,9 +20,5 @@ export default class EventListElement
 
    public getDescription(): string {
       return this.description;
-   }
-
-   public setDescription(newValue: string) {
-      this.description = newValue;
    }
 }

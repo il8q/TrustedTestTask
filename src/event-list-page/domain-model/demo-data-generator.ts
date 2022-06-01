@@ -10,18 +10,16 @@ export default class DemoDataGenerator
         this.elementFactory = elementFactory;
     }
 
-    public generate(): Array<EventListElement>
-    {
+    public generate(): Array<EventListElement> {
         return [
             this.elementFactory.create(this.eventCounter++, "Test description"),
             this.elementFactory.create(this.eventCounter++, "Second description"),
             this.elementFactory.create(-2, "Overdue -2"),
             this.elementFactory.create(-4, "Overdue -4"),
-        ]
+        ];
     }
 
-    public getCounter(): number
-    {
+    public getCounter(): number {
         return this.eventCounter;
     }
 }

@@ -6,8 +6,7 @@ import {DomainModelEvent} from "../domain-model/domain-model-event";
 type PageProperties = {
     eventHandler: EventHandler;
 };
-type PageState = {
-};
+type PageState = {};
 
 export default class EventListManagerPanel extends React.Component<PageProperties, PageState> {
     constructor(props: PageProperties) {
@@ -18,7 +17,7 @@ export default class EventListManagerPanel extends React.Component<PagePropertie
         return (
             <div className="event-list-manager-panel">
                 <ul>
-                    <li key={"event-list-manager-panel-0"} className="event-list-manager-panel__clear-button">
+                    <li className="event-list-manager-panel__clear-button">
                         <a onClick={() => {
                             this.props.eventHandler.applyEvent(
                                 new DomainModelEvent(
@@ -28,7 +27,7 @@ export default class EventListManagerPanel extends React.Component<PagePropertie
                             )
                         }}>Очистить</a>
                     </li>
-                    <li key={"event-list-manager-panel-1"} className="event-list-manager-panel__add-button">
+                    <li className="event-list-manager-panel__add-button">
                         <a onClick={() => {
                             this.props.eventHandler.applyEvent(
                                 new DomainModelEvent(

@@ -5,8 +5,7 @@ export default class EventListElementFactory
 {
     private static MAX_DESCRIPTION_LENGTH: number = 240;
 
-    public create(counter: number, description: string): EventListElement
-    {
+    public create(counter: number, description: string): EventListElement {
         const date: Date = this.generateData(counter);
         this.checkDescription(description);
         return new EventListElement(
@@ -16,8 +15,7 @@ export default class EventListElementFactory
         );
     }
 
-    private generateData(counter: number): Date
-    {
+    private generateData(counter: number): Date {
         return moment(new Date()).add(counter, 'w').toDate();
     }
 

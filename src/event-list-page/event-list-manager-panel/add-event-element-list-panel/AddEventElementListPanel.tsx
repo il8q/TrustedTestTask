@@ -28,7 +28,7 @@ export default class AddEventElementListPanel extends React.Component<PageProper
         };
     }
 
-    render() {
+    public render() {
         return (
             <div className="add-event-element-list-panel">
                 <div className="add-event-element-list-panel-content">

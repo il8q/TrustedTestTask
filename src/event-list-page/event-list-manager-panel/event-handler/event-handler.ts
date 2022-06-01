@@ -11,8 +11,7 @@ export default class EventHandler implements DomainEventHandler {
 
     public applyEvent(event: DomainModelEvent)
     {
-        switch (event.eventName)
-        {
+        switch (event.eventName) {
             case "openAddEventPanel":
                 this.parent.openAddEventPanel();
                 break;

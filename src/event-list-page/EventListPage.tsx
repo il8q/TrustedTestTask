@@ -5,13 +5,11 @@ import EventListManagerPanel from "./event-list-manager-panel/EventListManagerPa
 import EventHandler from "./event-list-manager-panel/event-handler/event-handler";
 import AddEventElementListPanel from "./event-list-manager-panel/add-event-element-list-panel/AddEventElementListPanel";
 
-type PageProperties = {
-};
+type PageProperties = {};
 type PageState = {
     events: Array<EventListElement>;
     showAddEventPanel: boolean;
 };
-
 
 export default class EventListPage extends React.Component<PageProperties, PageState> {
     private readonly domainModel: DomainModel;
@@ -43,28 +41,26 @@ export default class EventListPage extends React.Component<PageProperties, PageS
 
     private renderEventList() {
         return this.state.events.map((member) => (
-            <EventElementList data={member.getData().toString()}
+            <EventElementList key={member.getData().toString()}
+                              date={member.getData().toString()}
                               description={member.getDescription()}
                               isOverdue={member.isOverdue}/>
         ));
     }
 
-    public updateEventList()
-    {
+    public updateEventList() {
         this.setState({
             events: this.domainModel.getEventList(),
         });
     }
 
-    public openAddEventPanel()
-    {
+    public openAddEventPanel() {
         this.setState({
             showAddEventPanel: true,
         });
     }
 
-    public closeAddEventPanel()
-    {
+    public closeAddEventPanel() {
         this.setState({
             showAddEventPanel: false,
         });
