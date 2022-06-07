@@ -1,5 +1,4 @@
 import {EventHandler as DomainEventHandler} from "../../domain-model";
-import {DomainModelEvent} from "../../domain-model/domain-model-event";
 import EventListPage from "../../EventListPage";
 
 export default class EventHandler implements DomainEventHandler {
@@ -9,9 +8,9 @@ export default class EventHandler implements DomainEventHandler {
         this.parent = parent;
     }
 
-    public applyEvent(event: DomainModelEvent)
+    public applyEvent(name: string, parameters: any)
     {
-        switch (event.eventName) {
+        switch (name) {
             case "openAddEventPanel":
                 this.parent.openAddEventPanel();
                 break;
@@ -22,7 +21,7 @@ export default class EventHandler implements DomainEventHandler {
                 this.parent.updateEventList();
                 break;
             default:
-                throw new Error("EventPage принял не своё событие \"" + event.eventName + "\"");
+                throw new Error("EventPage принял не своё событие \"" + name + "\"");
         }
     }
 }

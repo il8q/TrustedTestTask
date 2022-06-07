@@ -1,7 +1,6 @@
 import React from "react";
 import EventHandler from "../domain-model/event-handler";
 import "./css/event-list-manager-panel.css";
-import {DomainModelEvent} from "../domain-model/domain-model-event";
 
 type PageProperties = {
     eventHandler: EventHandler;
@@ -19,22 +18,13 @@ export default class EventListManagerPanel extends React.Component<PagePropertie
                 <ul>
                     <li className="event-list-manager-panel__clear-button">
                         <a onClick={() => {
-                            this.props.eventHandler.applyEvent(
-                                new DomainModelEvent(
-                                    "clearEventList",
-                                    new Map<string, string>()
-                                )
-                            )
+                            this.props.eventHandler.applyEvent("clearEventList", {});
                         }}>Очистить</a>
                     </li>
                     <li className="event-list-manager-panel__add-button">
                         <a onClick={() => {
-                            this.props.eventHandler.applyEvent(
-                                new DomainModelEvent(
-                                    "openAddEventPanel",
-                                    new Map<string, string>()
-                                )
-                        )}}>Добавить</a>
+                            this.props.eventHandler.applyEvent("openAddEventPanel", {});
+                        }}>Добавить</a>
                     </li>
                 </ul>
             </div>

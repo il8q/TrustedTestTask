@@ -1,5 +1,4 @@
 import React from "react";
-import {DomainModelEvent} from "../../domain-model/domain-model-event";
 import EventHandler from "./event-handler/event-handler";
 import {EventHandler as DomainEventHandler} from "../../domain-model";
 import EventSubscriber from "../../domain-model/event-subscriber";
@@ -75,12 +74,7 @@ export default class AddEventElementListPanel extends React.Component<PageProper
             <div className="add-event-element-list-panel__button-container text-to-center">
                 <a className="button-container__button" onClick={() => {
                     this.props.eventHandler.applyEvent(
-                        new DomainModelEvent(
-                            "addToEventList",
-                            new Map<string, string>([
-                                ["description", this.state.description],
-                            ])
-                        )
+                        "addToEventList", {"description": this.state.description}
                     )
                 }}>
                     <b>Создать</b>
@@ -102,12 +96,7 @@ export default class AddEventElementListPanel extends React.Component<PageProper
             <div className="text-to-right">
                 <a className="button-container__button" onClick={() => {
                     this.props.eventHandler.applyEvent(
-                        new DomainModelEvent(
-                            "closeAddEventPanel",
-                            new Map<string, string>([
-                                ["description", this.state.description],
-                            ])
-                        )
+                        "closeAddEventPanel", {"description": this.state.description}
                     )
                 }}>
                     <b>X</b>
